@@ -1,6 +1,6 @@
 # scalability-lab05: Bookmarks System
 
-[![Build Status](https://travis-ci.org/auth0-eng-camp/scalability-lab05.svg?branch=begin_solution)](https://travis-ci.org/auth0-eng-camp/scalability-lab05)
+[![Build Status](https://travis-ci.org/Saetabis1/bookmark-checker.svg?branch=master)](https://travis-ci.org/Saetabis1/bookmark-checker)
 
 This branch contains a possible solution for Bookmarks challenge. It is implemented with Postgresql and Rabbitmq.
 
