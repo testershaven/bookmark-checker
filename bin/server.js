@@ -8,7 +8,7 @@ var server;
 
 function start(callback) {
   const app = express();
-  const api = require('./lib/api');
+  const api = require('../lib/api');
   console.log(`Starting server on env ${process.env.NODE_ENV}`);
 
   app.use(bodyParser.json());

@@ -4,11 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --exit",
     "migrate": "node-pg-migrate up",
-    "start": "node server",
-    "scheduler": "node scheduler",
-    "receive": "node receive"
+    "start": "node ./bin/server",
+    "scheduler": "node ./bin/scheduler",
+    "worker": "node ./bin/worker"
   },
   "author": "",
   "license": "ISC",

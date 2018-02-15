@@ -16,3 +16,9 @@ Then run the following command to populate the DB with the required tables:
 ```
 ./node_modules/.bin/node-pg-migrate up
 ```
+
+To run the solution components:
+
+- Worker: `npm run worker`
+- Server: `npm run server`
+- Scheduler: `npm run scheduler`

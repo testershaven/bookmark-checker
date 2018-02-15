@@ -11,5 +11,6 @@
   "port": 3000,
   "scheduler": {
     "time": 60000
-  }
+  },
+  "rabbitConn": "amqp://localhost"
 }

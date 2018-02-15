@@ -2,7 +2,7 @@ var chakram = require('chakram'),
     expect = chakram.expect;
 
 var baseUrl = 'http://localhost:3000/api/bookmarks';
-var server = require('../server');
+var server = require('../bin/server');
 
 describe('bookmarks api', function () {
   
