@@ -6,7 +6,7 @@ const config = require("config");
 
 async function publish() {
   try {
-    const conn = await amqp.connect("amqp://localhost");
+    const conn = await amqp.connect(config.get("rabbitConn"));
     const ch = await conn.createChannel();
     const q = "bookmarks";
     const interval = config.get("scheduler").time;

@@ -8,5 +8,6 @@
     "name": "bookmarks",
     "database": "bookmarks"
   },
-  "port": 3000
+  "port": 3000,
+  "rabbitConn": "amqp://localhost"
 }

@@ -1,6 +1,7 @@
 const amqp = require('amqplib/callback_api');
 const request = require('request');
 const bookmarks = require('./lib/db/bookmarks');
+const config = require('config');
 
 const updateStatus = function(id, status) {
   const params = {
@@ -14,7 +15,7 @@ const updateStatus = function(id, status) {
   });
 }
 
-amqp.connect('amqp://localhost', function(err, conn) {
+amqp.connect(config.get("rabbitConn"), function(err, conn) {
   conn.createChannel(function(err, ch) {
     let q = 'bookmarks';
 
