@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "8"
+services:
+  - postgresql
+  - rabbitmq
+env:
+  - NODE_ENV=ci
+before_script:
+  - psql -c 'create database bookmarks;' -U postgres
+  - npm run migrate
+script: npm test
