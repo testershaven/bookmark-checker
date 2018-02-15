@@ -24,7 +24,7 @@ amqp.connect('amqp://localhost', function(err, conn) {
 
       msg = JSON.parse(msg.content);
       request(msg.url, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
+        if (!error && response.statusCode < 400) {
           updateStatus(msg.id, true);
         } else {
           updateStatus(msg.id, false);
