@@ -1,27 +1,36 @@
-const bookmarks = require('./lib/db/bookmarks');
-const amqp = require('amqplib/callback_api');
+#!/usr/bin/env node
 
-/**
- * Gets a batch of bookmarks to send to the queue
- * the batch are the 100 with the oldest checked timestamp
- * @return send the date to the queue
- */
-bookmarks.findBatch(function(err, result) {
-  if (err) { return next(err); }
-  for(let row of result) {
+const bookmarks = require("./lib/db/bookmarks");
+const amqp = require("amqplib");
+const config = require("config");
 
-    amqp.connect('amqp://localhost', function(err, conn) {
-      conn.createChannel(function(err, ch) {
-        let q = 'bookmarks';
-        let msg = `${row.id} - ${row.url}`;
+async function publish() {
+  try {
+    const conn = await amqp.connect("amqp://localhost");
+    const ch = await conn.createChannel();
+    const q = "bookmarks";
+    const interval = config.get("scheduler").time;
 
-        ch.assertQueue(q, {durable: false});
-        // Note: on Node 6 Buffer.from(msg) should be used
-        ch.sendToQueue(q, new Buffer(msg));
-        console.log(" [x] Sent %s", msg);
+    await ch.assertQueue(q, { durable: false });
+
+    console.log(" [*] Queuing bookmarks in %s every %sms. To exit press CTRL+C", q, interval);
+
+    let queueBookmarks = () => {
+      bookmarks.findAll((err, bookmarks) => {
+        console.log(" [*] Queuing %s bookmarks", bookmarks.length);
+        if (err) return showError(err, conn);
+
+        bookmarks.forEach((bookmark) => {
+          ch.sendToQueue(q, Buffer.from(JSON.stringify(bookmark)));
+        });
       });
-      setTimeout(function() { conn.close(); process.exit(0) }, 500);
-    });
-  }
-});
+    };
 
+    setInterval(queueBookmarks, interval);
+  } catch (e) {
+    console.log(e);
+    conn.close();
+  }
+}
+
+publish();
