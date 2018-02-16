@@ -27,6 +27,7 @@ async function publish() {
     };
 
     setInterval(queueBookmarks, interval);
+    queueBookmarks();
   } catch (e) {
     console.log(e);
     conn.close();
