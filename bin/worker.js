@@ -1,6 +1,6 @@
 const amqp = require('amqplib/callback_api');
 const request = require('request');
-const bookmarks = require('./lib/db/bookmarks');
+const bookmarks = require('../lib/db/bookmarks');
 const config = require('config');
 
 const updateStatus = function(id, status) {
