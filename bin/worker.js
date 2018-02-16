@@ -19,7 +19,7 @@ amqp.connect(config.get("rabbitConn"), function(err, conn) {
   conn.createChannel(function(err, ch) {
     let q = 'bookmarks';
 
-    ch.assertQueue(q, {durable: true});
+    ch.assertQueue(q, {durable: false});
     ch.prefetch(config.get("prefetch"));
     console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
     ch.consume(q, function(msg) {
