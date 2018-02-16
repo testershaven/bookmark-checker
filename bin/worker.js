@@ -24,18 +24,18 @@ amqp.connect(config.get("rabbitConn"), function(err, conn) {
     console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
     ch.consume(q, function(msg) {
 
-      msg = JSON.parse(msg.content);
+      const content = JSON.parse(msg.content);
       const options ={
-        url: msg.url,
+        url: content.url,
         timeout: config.get("timeout")
       }
-      request(msg.url, function (error, response, body) {
+      request(content.url, function (error, response, body) {
         if (!error && response.statusCode < 400) {
-          updateStatus(msg.id, true);
+          updateStatus(content.id, true);
         } else {
-          updateStatus(msg.id, false);
+          updateStatus(content.id, false);
         }
-        console.log(`url ${msg.url} checked`);
+        console.log(`url ${content.url} checked`);
         ch.ack(msg);
       })
     }, {noAck: false});
