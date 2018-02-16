@@ -1,3 +1,4 @@
+.vscode
 .vagrant
 config/aws.*
 # Logs

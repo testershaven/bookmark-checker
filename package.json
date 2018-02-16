@@ -8,13 +8,15 @@
     "migrate": "node-pg-migrate up",
     "start": "node ./bin/server",
     "scheduler": "node ./bin/scheduler",
-    "worker": "node ./bin/worker"
+    "worker": "node ./bin/worker",
+    "monitor": "node ./bin/monitor"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "amqplib": "^0.5.2",
     "async": "^2.6.0",
+    "aws-sdk": "^2.196.0",
     "body-parser": "^1.18.2",
     "cheerio": "^1.0.0-rc.2",
     "config": "^1.29.2",
