@@ -19,11 +19,16 @@ amqp.connect(config.get("rabbitConn"), function(err, conn) {
   conn.createChannel(function(err, ch) {
     let q = 'bookmarks';
 
-    ch.assertQueue(q, {durable: false});
+    ch.assertQueue(q, {durable: true});
+    ch.prefetch(config.get("prefetch"));
     console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
     ch.consume(q, function(msg) {
 
       msg = JSON.parse(msg.content);
+      const options ={
+        url: msg.url,
+        timeout: config.get("timeout")
+      }
       request(msg.url, function (error, response, body) {
         if (!error && response.statusCode < 400) {
           updateStatus(msg.id, true);
@@ -31,7 +36,8 @@ amqp.connect(config.get("rabbitConn"), function(err, conn) {
           updateStatus(msg.id, false);
         }
         console.log(`url ${msg.url} checked`);
+        ch.ack(msg);
       })
-    }, {noAck: true});
+    }, {noAck: false});
   });
 });

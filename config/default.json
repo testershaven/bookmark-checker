@@ -15,5 +15,7 @@
   "rabbitConn": "amqp://localhost",
   "monitor": {
     "time": 60000
-  }
+  },
+  "timeout": 5000,
+  "prefetch": 10
 }
