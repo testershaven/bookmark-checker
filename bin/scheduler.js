@@ -17,8 +17,10 @@ async function publish() {
 
     let queueBookmarks = () => {
       bookmarks.findAll((err, bookmarks) => {
+        if (err)
+          return showError(err, conn);
+
         console.log(" [*] Queuing %s bookmarks", bookmarks.length);
-        if (err) return showError(err, conn);
 
         bookmarks.forEach((bookmark) => {
           ch.sendToQueue(q, Buffer.from(JSON.stringify(bookmark)));
