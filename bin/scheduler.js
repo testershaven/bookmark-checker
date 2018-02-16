@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const bookmarks = require("./lib/db/bookmarks");
+const bookmarks = require("../lib/db/bookmarks");
 const amqp = require("amqplib");
 const config = require("config");
 
@@ -27,6 +27,7 @@ async function publish() {
     };
 
     setInterval(queueBookmarks, interval);
+    queueBookmarks();
   } catch (e) {
     console.log(e);
     conn.close();
