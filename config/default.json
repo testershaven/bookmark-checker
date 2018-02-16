@@ -12,5 +12,8 @@
   "scheduler": {
     "time": 60000
   },
-  "rabbitConn": "amqp://localhost"
+  "rabbitConn": "amqp://localhost",
+  "monitor": {
+    "time": 60000
+  }
 }
