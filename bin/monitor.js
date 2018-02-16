@@ -53,6 +53,7 @@ async function measureQueueSize() {
     }
 
     setInterval(getQueueSize, interval);
+    getQueueSize();
   } catch (e) {
     console.log(e);
     conn.close();
