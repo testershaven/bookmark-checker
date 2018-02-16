@@ -7,23 +7,7 @@ const config = require("config");
 // Create CloudWatch service object
 var cw = new AWS.CloudWatch({apiVersion: '2010-08-01'});
 
-// Create parameters JSON for putMetricData
-var params = {
-  MetricData: [
-    {
-      MetricName: 'PAGES_LEFT',
-      Dimensions: [
-        {
-          Name: 'PAGES',
-          Value: 'URLS'
-        },
-      ],
-      Unit: 'None'
-      //Value: 1.0
-    },
-  ],
-  Namespace: 'BOOKMARK/MONITOR'
-};
+
 
 async function measureQueueSize() {
   try {
@@ -38,7 +22,18 @@ async function measureQueueSize() {
       try {
         let chInfo = await ch.assertQueue(q, { durable: false });
         let queueSize = chInfo.messageCount
-        params.MetricData.Value = queueSize;
+
+        // Create parameters JSON for putMetricData
+        var params = {
+          MetricData: [
+            {
+              MetricName: 'PAGES_LEFT',
+              Unit: 'None',
+              Value: queueSize
+            },
+          ],
+          Namespace: 'BOOKMARK/MONITOR'
+        };
 
         if (process.env.NODE_ENV === "production") {
           cw.putMetricData(params, function(err, data) {
